@@ -1,5 +1,5 @@
 {
-  "jobad": {
+  "jobAd": {
     "properties": {
       "jobTitle": {
         "type": "text"
@@ -13,10 +13,12 @@
       }
     }
   },
-  "jobad_relation": {
+  "jobAdRelations": {
     "type": "join",
     "relations": {
-      "jobad": "favouriteItem"
+      "jobAd": "favouriteItem"
     }
   }
+}
+}
 }

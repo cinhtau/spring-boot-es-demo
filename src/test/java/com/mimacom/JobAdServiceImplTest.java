@@ -37,6 +37,10 @@ public class JobAdServiceImplTest {
         jobAd.setJobTitle("Software Engineer");
         jobAdDocument.setJobAd(jobAd);
 
+        JobAdRelations parentRelation = new JobAdRelations();
+        parentRelation.setName("jobAd");
+        jobAdDocument.setJobAdRelations(parentRelation);
+
         jobAdService.save(jobAdDocument);
 
         if (jobAdService.find("4711") != null) {
@@ -53,7 +57,7 @@ public class JobAdServiceImplTest {
 
         favDoc.setFavouriteItem(favouriteItem);
 
-        JobAdRelations jobAdRelations = new JobAdRelations();
+        ChildRelation jobAdRelations = new ChildRelation();
         jobAdRelations.setName("favouriteItem");
         jobAdRelations.setParent("4711");
 

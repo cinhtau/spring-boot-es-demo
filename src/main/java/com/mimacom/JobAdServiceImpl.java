@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mimacom.model.FavouriteItemDocument;
 import com.mimacom.model.JobAdDocument;
 import org.apache.http.HttpHost;
+import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -58,16 +59,18 @@ public class JobAdServiceImpl implements JobAdService {
             IndexRequest indexRequest = new IndexRequest(INDEX_NAME, MAPPING_TYPE, child.getId());
             indexRequest.source(json, XContentType.JSON);
             indexRequest.routing(parent);
-            indexRequest.parent(parent);
 
             IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
             LOGGER.info(indexResponse.status().name());
             LOGGER.info("Child created with HTTP code {}", indexResponse.status().getStatus());
-        } catch (IOException e) {
+        } catch (ElasticsearchException e)  {
+            LOGGER.error("unknown mystery", e);
+        }
+        catch (IOException e) {
             LOGGER.error("Could not index child document.", e);
         }
-
     }
+
 
     @Override
     public JobAdDocument find(String id) {

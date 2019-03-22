@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class JobAdRelations {
 
-    private String name;
+    protected String name;
 
-    private String parent;
+
 }

@@ -9,5 +9,5 @@ public class FavouriteItemDocument {
 
     private FavouriteItem favouriteItem;
 
-    private JobAdRelations jobAdRelations;
+    private ChildRelation jobAdRelations;
 }
