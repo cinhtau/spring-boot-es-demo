@@ -10,4 +10,6 @@ public interface JobAdService {
     void save(FavouriteItemDocument favouriteItem, String parent);
 
     JobAdDocument find(String id);
+
+    void springSave(FavouriteItemDocument favouriteItemDocument, String parent);
 }

@@ -20,9 +20,6 @@ public class JobAdServiceImplTest {
     @Autowired
     private JobAdService jobAdService;
 
-    @Autowired
-    private ElasticsearchTemplate esTemplate;
-
     @Before
     public void setup() {
     }
@@ -51,7 +48,6 @@ public class JobAdServiceImplTest {
         FavouriteItemDocument favDoc = new FavouriteItemDocument();
         favDoc.setId("child-1");
 
-
         FavouriteItem favouriteItem = new FavouriteItem();
         favouriteItem.setNote("my pleasure");
 
@@ -64,7 +60,7 @@ public class JobAdServiceImplTest {
         favDoc.setJobAdRelations(jobAdRelations);
 
         //when
-        jobAdService.save(favDoc, "4711");
+        jobAdService.springSave(favDoc, "4711");
         //then
     }
 
