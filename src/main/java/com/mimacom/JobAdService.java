@@ -1,17 +1,13 @@
 package com.mimacom;
 
-import com.mimacom.model.FavouriteItem;
-import com.mimacom.model.JobAd;
+import com.mimacom.model.FavouriteItemDocument;
+import com.mimacom.model.JobAdDocument;
 
 public interface JobAdService {
 
-    JobAd save(JobAd jobAd);
+    JobAdDocument save(JobAdDocument jobAd);
 
-    FavouriteItem save(FavouriteItem favouriteItem);
+    void save(FavouriteItemDocument favouriteItem, String parent);
 
-    JobAd find(String id);
-
-    Iterable<JobAd> findAll();
-
-    Iterable<FavouriteItem> findFavourites();
+    JobAdDocument find(String id);
 }

@@ -1,0 +1,22 @@
+{
+  "jobad": {
+    "properties": {
+      "jobTitle": {
+        "type": "text"
+      }
+    }
+  },
+  "favouriteItem": {
+    "properties": {
+      "note": {
+        "type": "text"
+      }
+    }
+  },
+  "jobad_relation": {
+    "type": "join",
+    "relations": {
+      "jobad": "favouriteItem"
+    }
+  }
+}
