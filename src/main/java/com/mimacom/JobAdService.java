@@ -12,4 +12,6 @@ public interface JobAdService {
     JobAdDocument find(String id);
 
     void springSave(FavouriteItemDocument favouriteItemDocument, String parent);
+
+    void deleteAllIndexes();
 }

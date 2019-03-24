@@ -12,11 +12,9 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.UpdateQuery;
 import org.springframework.stereotype.Service;
@@ -26,7 +24,6 @@ import java.util.Optional;
 
 import static com.mimacom.DemoApplication.INDEX_NAME;
 import static com.mimacom.DemoApplication.MAPPING_TYPE;
-import static org.elasticsearch.common.xcontent.XContentFactory.*;
 
 @Service
 public class JobAdServiceImpl implements JobAdService {
@@ -83,11 +80,7 @@ public class JobAdServiceImpl implements JobAdService {
     @Override
     public JobAdDocument find(String id) {
         Optional<JobAdDocument> jobAd = this.jobAdRepository.findById(id);
-        if (jobAd.isPresent()) {
-            return jobAd.get();
-        } else {
-            return new JobAdDocument();
-        }
+        return jobAd.orElseGet(JobAdDocument::new);
     }
 
     @Override
@@ -116,6 +109,11 @@ public class JobAdServiceImpl implements JobAdService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void deleteAllIndexes() {
+        this.jobAdRepository.deleteAll();
     }
 
 
