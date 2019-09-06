@@ -1,24 +1,49 @@
 {
-  "jobAd": {
+  "doc": {
     "properties": {
-      "jobTitle": {
-        "type": "text"
+      "id": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "jobAd": {
+        "properties": {
+          "id": {
+            "properties": {
+              "value": {
+                "type": "keyword"
+              }
+            }
+          },
+          "jobTitle": {
+            "type": "text"
+          }
+        }
+      },
+      "favouriteItem": {
+        "properties": {
+          "id": {
+            "properties": {
+              "value": {
+                "type": "keyword"
+              }
+            }
+          },
+          "note": {
+            "type": "text"
+          }
+        }
+      },
+      "jobAdRelations": {
+        "type": "join",
+        "relations": {
+          "jobAd": "favouriteItem"
+        }
       }
-    }
-  },
-  "favouriteItem": {
-    "properties": {
-      "note": {
-        "type": "text"
-      }
-    }
-  },
-  "jobAdRelations": {
-    "type": "join",
-    "relations": {
-      "jobAd": "favouriteItem"
     }
   }
-}
-}
 }

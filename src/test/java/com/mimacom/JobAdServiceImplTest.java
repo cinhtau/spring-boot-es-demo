@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -20,17 +19,33 @@ public class JobAdServiceImplTest {
     @Autowired
     private JobAdService jobAdService;
 
-    @Autowired
-    private ElasticsearchTemplate esTemplate;
-
     @Before
     public void setup() {
+        jobAdService.deleteAllIndexes();
     }
 
+    @Test
+    public void saveChildWithIndexRequestTest() {
+        // given
+        JobAdDocument parent = saveParent();
+        FavouriteItemDocument child = createChild();
+
+        // when
+        jobAdService.save(child, parent.getId());
+
+    }
 
     @Test
-    public void saveChild() {
-        //given
+    public void saveChildWithUpdateRequestTest() {
+        // given
+        JobAdDocument parent = saveParent();
+        FavouriteItemDocument child = createChild();
+
+        // when
+        jobAdService.springSave(child, parent.getId());
+    }
+
+    private JobAdDocument saveParent() {
         JobAdDocument jobAdDocument = new JobAdDocument();
         jobAdDocument.setId("4711");
         JobAd jobAd = new JobAd();
@@ -43,30 +58,30 @@ public class JobAdServiceImplTest {
 
         jobAdService.save(jobAdDocument);
 
-        if (jobAdService.find("4711") != null) {
+        JobAdDocument parent = jobAdService.find("4711");
+        if (parent != null) {
             LOGGER.info("parent found");
         }
 
+        return parent;
+    }
 
-        FavouriteItemDocument favDoc = new FavouriteItemDocument();
-        favDoc.setId("child-1");
-
+    private FavouriteItemDocument createChild() {
+        FavouriteItemDocument child = new FavouriteItemDocument();
+        child.setId("child-1");
 
         FavouriteItem favouriteItem = new FavouriteItem();
         favouriteItem.setNote("my pleasure");
 
-        favDoc.setFavouriteItem(favouriteItem);
+        child.setFavouriteItem(favouriteItem);
 
         ChildRelation jobAdRelations = new ChildRelation();
         jobAdRelations.setName("favouriteItem");
         jobAdRelations.setParent("4711");
 
-        favDoc.setJobAdRelations(jobAdRelations);
+        child.setJobAdRelations(jobAdRelations);
 
-        //when
-        jobAdService.save(favDoc, "4711");
-        //then
+        return child;
     }
-
 
 }
